@@ -12,23 +12,49 @@ const About: React.FC = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="text-center mb-16 slide-in-up">
-          <div className="flex items-center justify-center mb-6">
+        {/* About Our Community Section */}
+        <div className="bg-white rounded-xl p-8 shadow-lg mb-16">
+          <div className="flex items-center justify-center mb-8">
             <div className="bg-white rounded-xl p-4 shadow-lg mr-4 float-animation card-3d">
               <img 
-                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop" 
+                src="/LOGO_KDKR.png" 
                 alt="OUR KANDUKUR Community Logo" 
-                className="w-16 h-16 rounded-lg object-cover"
+                className="w-16 h-16 rounded-lg object-contain"
               />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 bounce-in">About OUR KANDUKUR</h1>
+            <h2 className="text-3xl font-bold text-gray-900 bounce-in">About Our Community</h2>
           </div>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed slide-in-up">
-            OUR KANDUKUR is a revolutionary startup community based in Kandukur, Prakasam District, 
-            Andhra Pradesh. We are dedicated to empowering students by bridging the gap between academic 
-            learning and industry requirements while fostering a thriving ecosystem of innovation and growth.
-          </p>
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              OUR KANDUKUR is a vibrant startup community that serves as a bridge between students and the industry. 
+              We provide comprehensive support through internships, workshops, hackathons, tech seminars, webinars, 
+              and job opportunities to help students build successful careers.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed mb-6">
+              Our community is built on the foundation of empowering students through three core areas: 
+              Intellectual Capital, Financial Capital, and Social Capital. We believe in creating an ecosystem 
+              where students can learn, grow, and thrive in their chosen fields.
+            </p>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              Based in Kandukur, Prakasam District, Andhra Pradesh, we have successfully created a network 
+              of opportunities that connects talented students with leading companies and organizations across India.
+            </p>
+          </div>
+        </div>
+
+        {/* Statistics */}
+        <div className="grid md:grid-cols-4 gap-8 mb-16 perspective-container">
+          {stats.map((stat, index) => (
+            <div key={index} className="text-center slide-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all card-3d pulse-glow">
+                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 float-animation">
+                  <stat.icon className="h-6 w-6 text-blue-600" />
+                </div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{stat.number}</div>
+                <div className="text-gray-600">{stat.label}</div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Community Info */}
@@ -55,41 +81,6 @@ const About: React.FC = () => {
                 <p>2000+ Active Members</p>
               </div>
             </div>
-          </div>
-        </div>
-        {/* Statistics */}
-        <div className="grid md:grid-cols-4 gap-8 mb-16 perspective-container">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center slide-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all card-3d pulse-glow">
-                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 float-animation">
-                  <stat.icon className="h-6 w-6 text-blue-600" />
-                </div>
-                <div className="text-3xl font-bold text-blue-600 mb-2">{stat.number}</div>
-                <div className="text-gray-600">{stat.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Community Description */}
-        <div className="bg-white rounded-xl p-8 shadow-lg mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">About Our Community</h2>
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              OUR KANDUKUR is a vibrant startup community that serves as a bridge between students and the industry. 
-              We provide comprehensive support through internships, workshops, hackathons, tech seminars, webinars, 
-              and job opportunities to help students build successful careers.
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed mb-6">
-              Our community is built on the foundation of empowering students through three core areas: 
-              Intellectual Capital, Financial Capital, and Social Capital. We believe in creating an ecosystem 
-              where students can learn, grow, and thrive in their chosen fields.
-            </p>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              Based in Kandukur, Prakasam District, Andhra Pradesh, we have successfully created a network 
-              of opportunities that connects talented students with leading companies and organizations across India.
-            </p>
           </div>
         </div>
 

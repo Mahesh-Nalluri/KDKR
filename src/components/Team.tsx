@@ -1,75 +1,9 @@
 import React from 'react';
-import { Mail, Linkedin, MapPin, Instagram, FileText, Users } from 'lucide-react';
+import { Mail, Linkedin, MapPin, Instagram, FileText, Users, Loader2, AlertCircle } from 'lucide-react';
+import { useTeamMembers } from '../hooks/useTeamMembers';
 
 const Team: React.FC = () => {
-  const teamMembers = [
-    {
-      id: 1,
-      name: 'Rajesh Kumar',
-      role: 'Founder & CEO',
-      location: 'Kandukur, AP',
-      phone: '+91 9876543210',
-      email: 'rajesh@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: 'rajesh-resume.pdf'
-    },
-    {
-      id: 2,
-      name: 'Priya Sharma',
-      role: 'Head of Operations',
-      location: 'Hyderabad, TS',
-      phone: '+91 9876543211',
-      email: 'priya@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: null
-    },
-    {
-      id: 3,
-      name: 'Arjun Patel',
-      role: 'Technical Lead',
-      location: 'Bangalore, KA',
-      phone: '+91 9876543212',
-      email: 'arjun@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: 'arjun-resume.pdf'
-    },
-    {
-      id: 4,
-      name: 'Sneha Reddy',
-      role: 'Community Manager',
-      location: 'Chennai, TN',
-      phone: '+91 9876543213',
-      email: 'sneha@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: null
-    },
-    {
-      id: 5,
-      name: 'Vikram Singh',
-      role: 'Business Development Head',
-      location: 'Mumbai, MH',
-      phone: '+91 9876543214',
-      email: 'vikram@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: 'vikram-resume.pdf'
-    },
-    {
-      id: 6,
-      name: 'Anitha Krishnan',
-      role: 'Content & Training Head',
-      location: 'Pune, MH',
-      phone: '+91 9876543215',
-      email: 'anitha@ourkandukur.com',
-      linkedin: '#',
-      instagram: '#',
-      resume: null
-    }
-  ];
+  const { teamMembers, loading, error } = useTeamMembers();
 
   return (
     <section className="py-16 bg-gray-50">
@@ -82,8 +16,27 @@ const Team: React.FC = () => {
           </p>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-gray-600">Loading team members...</span>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
+              <span className="text-red-800">Error loading team members: {error}</span>
+            </div>
+          </div>
+        )}
+
         {/* Team Members */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-container">
+        {!loading && !error && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-container">
           {teamMembers.map((member) => (
             <div key={member.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 card-3d slide-in-up">
               <div className="text-center mb-6">
@@ -108,7 +61,7 @@ const Team: React.FC = () => {
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="h-4 w-4 mr-3 text-gray-400">📞</span>
-                  <a href={`tel:${member.phone}`} className="hover:text-blue-600">
+                  <a href={`tel:${member.phone}`} className="hover:text-blue-600 transition-colors">
                     {member.phone}
                   </a>
                 </div>
@@ -131,9 +84,9 @@ const Team: React.FC = () => {
                   >
                     <Instagram className="h-5 w-5" />
                   </a>
-                  {member.resume && (
+                  {member.resume_url && (
                     <a
-                      href={`/resumes/${member.resume}`}
+                      href={member.resume_url}
                       className="text-gray-400 hover:text-green-600 transition-colors"
                       title="Download Resume"
                     >
@@ -145,6 +98,7 @@ const Team: React.FC = () => {
             </div>
           ))}
         </div>
+        )}
 
         {/* Join Our Team CTA */}
         <div className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-center text-white">

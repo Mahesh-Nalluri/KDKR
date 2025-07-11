@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, Filter, Search } from 'lucide-react';
+import { Calendar, MapPin, Clock, Filter, Search, Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { useOpportunities } from '../hooks/useOpportunities';
 
 const Opportunities: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const { opportunities, loading, error, refetch } = useOpportunities();
 
   const categories = [
     { id: 'all', label: 'All Opportunities' },
@@ -13,81 +15,6 @@ const Opportunities: React.FC = () => {
     { id: 'hackathons', label: 'Hackathons' },
     { id: 'seminars', label: 'Seminars' },
     { id: 'webinars', label: 'Webinars' }
-  ];
-
-  const opportunities = [
-    {
-      id: 1,
-      title: 'Full Stack Developer Internship',
-      company: 'TechCorp Solutions',
-      location: 'Hyderabad, India',
-      type: 'internships',
-      status: 'open',
-      deadline: '2024-01-15',
-      description: 'Join our team for a 6-month internship focusing on React and Node.js development.',
-      requirements: ['React', 'Node.js', 'MongoDB'],
-      stipend: '₹15,000/month'
-    },
-    {
-      id: 2,
-      title: 'AI/ML Workshop Series',
-      company: 'DataScience Academy',
-      location: 'Online',
-      type: 'workshops',
-      status: 'open',
-      deadline: '2024-01-20',
-      description: 'Comprehensive workshop series on Machine Learning and AI fundamentals.',
-      requirements: ['Python', 'Statistics', 'Basic ML'],
-      stipend: 'Free'
-    },
-    {
-      id: 3,
-      title: 'Backend Developer Position',
-      company: 'StartupHub',
-      location: 'Bangalore, India',
-      type: 'jobs',
-      status: 'closed',
-      deadline: '2023-12-30',
-      description: 'Full-time backend developer role with competitive salary and benefits.',
-      requirements: ['Java', 'Spring Boot', 'PostgreSQL'],
-      stipend: '₹8-12 LPA'
-    },
-    {
-      id: 4,
-      title: 'Blockchain Hackathon 2024',
-      company: 'CryptoInnovate',
-      location: 'Mumbai, India',
-      type: 'hackathons',
-      status: 'open',
-      deadline: '2024-01-25',
-      description: '48-hour hackathon focusing on blockchain solutions for social good.',
-      requirements: ['Blockchain', 'Smart Contracts', 'Web3'],
-      stipend: '₹1,00,000 Prize Pool'
-    },
-    {
-      id: 5,
-      title: 'Cloud Computing Seminar',
-      company: 'CloudTech Institute',
-      location: 'Chennai, India',
-      type: 'seminars',
-      status: 'open',
-      deadline: '2024-01-18',
-      description: 'Expert-led seminar on AWS, Azure, and Google Cloud platforms.',
-      requirements: ['Basic Cloud Knowledge'],
-      stipend: '₹500'
-    },
-    {
-      id: 6,
-      title: 'Digital Marketing Webinar',
-      company: 'MarketingPro',
-      location: 'Online',
-      type: 'webinars',
-      status: 'open',
-      deadline: '2024-01-22',
-      description: 'Learn advanced digital marketing strategies from industry experts.',
-      requirements: ['Basic Marketing Knowledge'],
-      stipend: 'Free'
-    }
   ];
 
   const filteredOpportunities = opportunities.filter(opportunity => {
@@ -115,8 +42,21 @@ const Opportunities: React.FC = () => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">Latest Opportunities</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the latest internships, jobs, workshops, and events updated daily
+            Discover the latest internships, jobs, workshops, and events - updated in real-time
           </p>
+          <div className="flex items-center justify-center mt-4 space-x-4">
+            <div className="flex items-center text-sm text-gray-500">
+              <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+              Live Updates
+            </div>
+            <button
+              onClick={refetch}
+              className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              <RefreshCw className="h-4 w-4 mr-1" />
+              Refresh
+            </button>
+          </div>
         </div>
 
         {/* Filters */}
@@ -150,8 +90,33 @@ const Opportunities: React.FC = () => {
           </div>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <span className="ml-2 text-gray-600">Loading opportunities...</span>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-8">
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
+              <span className="text-red-800">Error loading opportunities: {error}</span>
+              <button
+                onClick={refetch}
+                className="ml-4 text-red-600 hover:text-red-800 underline"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Opportunities Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-container">
+        {!loading && !error && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-container">
           {filteredOpportunities.map((opportunity) => (
             <div key={opportunity.id} className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 card-3d slide-in-up">
               <div className="p-6">
@@ -172,7 +137,7 @@ const Opportunities: React.FC = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
                     <Calendar className="h-4 w-4 mr-2" />
-                    Deadline: {opportunity.deadline}
+                    Deadline: {new Date(opportunity.deadline).toLocaleDateString()}
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
                     <Clock className="h-4 w-4 mr-2" />
@@ -204,8 +169,9 @@ const Opportunities: React.FC = () => {
             </div>
           ))}
         </div>
+        )}
 
-        {filteredOpportunities.length === 0 && (
+        {!loading && !error && filteredOpportunities.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No opportunities found matching your criteria.</p>
           </div>

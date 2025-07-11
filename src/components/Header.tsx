@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Bell } from 'lucide-react';
 
 interface HeaderProps {
   currentSection: string;
@@ -23,8 +23,17 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0 float-animation">
-              <h1 className="text-2xl font-bold text-blue-800">OUR KANDUKUR</h1>
-              <p className="text-xs text-gray-600">Startup Community</p>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/LOGO_KDKR.png" 
+                  alt="OUR KANDUKUR Logo" 
+                  className="w-10 h-10 rounded-lg object-contain bg-white p-1 shadow-md"
+                />
+                <div>
+                  <h1 className="text-2xl font-bold text-blue-800">OUR KANDUKUR</h1>
+                  <p className="text-xs text-gray-600">Startup Community</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -44,6 +53,14 @@ const Header: React.FC<HeaderProps> = ({ currentSection, setCurrentSection }) =>
                   {item.label}
                 </button>
               ))}
+              <div className="relative">
+                <button className="p-2 text-gray-700 hover:text-blue-800 hover:bg-blue-100 rounded-md transition-colors">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                    3
+                  </span>
+                </button>
+              </div>
             </div>
           </nav>
 

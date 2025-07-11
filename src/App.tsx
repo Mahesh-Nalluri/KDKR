@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnnouncementBanner from './components/AnnouncementBanner';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Opportunities from './components/Opportunities';
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <AnnouncementBanner />
       <Header currentSection={currentSection} setCurrentSection={setCurrentSection} />
       <main>
         {renderSection()}

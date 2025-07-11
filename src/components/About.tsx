@@ -205,22 +205,6 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Join Our Growing Community</h2>
-          <p className="text-xl text-gray-600 mb-6 max-w-3xl mx-auto">
-            Be part of a community that's transforming lives and creating opportunities. 
-            Whether you're a student, professional, or organization, there's a place for you in OUR KANDUKUR.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-              Become a Member
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
-              Partner with Us
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -115,3 +115,21 @@
   transform: translateY(-1px) translateZ(5px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
+/* Scrolling Testimonials Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
